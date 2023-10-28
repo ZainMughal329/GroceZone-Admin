@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_core_web/firebase_core_web.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:groce_zone_admin/controllers/menu_controllers.dart';
 import 'package:groce_zone_admin/layout.dart';
 
 void main() async {
@@ -15,6 +17,7 @@ void main() async {
         appId: "1:287411568147:web:f5bcd21c4b1868117309e6",
         measurementId: "G-LBXWDB21TC"),
   );
+  Get.put(SideMenuController());
 
   // await FirebaseAppWeb
   runApp(const MyApp());

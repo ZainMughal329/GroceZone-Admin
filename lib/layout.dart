@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:groce_zone_admin/components/small_screen.dart';
 
+import 'components/large_screen.dart';
 import 'components/top_nav_bar.dart';
+import 'helpers/responsive.dart';
 
 
 class SiteLayout extends StatelessWidget {
@@ -16,13 +19,10 @@ class SiteLayout extends StatelessWidget {
       drawer: const Drawer(
         // child: SideMenu(),
       ),
-      // body: ResponsiveWidget(
-      //     largeScreen: const LargeScreen(),
-      //     smallScreen: Padding(
-      //       padding: const EdgeInsets.symmetric(horizontal: 16),
-      //       child: localNavigator(),
-      //     )
-      // ),
+      body: ResponsiveWidget(
+          largeScreen: const LargeScreen(),
+          smallScreen: SmallScreen(),
+      ),
     );
   }
 }
