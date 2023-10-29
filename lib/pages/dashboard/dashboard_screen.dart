@@ -107,36 +107,38 @@ class DashBoardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Row(
-        children: [
-          Expanded(
-            flex: 1,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                _sideMenuItemWidget(
-                    'DashBoard', Icons.data_exploration_outlined, 'dashboard'),
-                _sideMenuItemWidget(
-                    'Inventory', Icons.inventory_rounded, 'inventory'),
-                _sideMenuItemWidget('Orders', Icons.trending_up, 'orders'),
-              ],
+    return Flexible(
+      child: Container(
+        child: Row(
+          children: [
+            Expanded(
+              flex: 1,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  _sideMenuItemWidget(
+                      'DashBoard', Icons.data_exploration_outlined, 'dashboard'),
+                  _sideMenuItemWidget(
+                      'Inventory', Icons.inventory_rounded, 'inventory'),
+                  _sideMenuItemWidget('Orders', Icons.trending_up, 'orders'),
+                ],
+              ),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 20),
-            child: Container(
-              width: 0.5,
-              color: Colors.grey,
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 20,horizontal: 5),
+              child: Container(
+                width: 0.5,
+                color: Colors.grey,
+              ),
             ),
-          ),
-          Obx(() {
-            return Expanded(
-              flex: 5,
-              child: _itemScreen(controller.activeItem.value),
-            );
-          })
-        ],
+            Obx(() {
+              return Expanded(
+                flex: 5,
+                child: Container(child: _itemScreen(controller.activeItem.value)),
+              );
+            })
+          ],
+        ),
       ),
     );
   }
