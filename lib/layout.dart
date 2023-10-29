@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:groce_zone_admin/components/app_colors.dart';
 import 'package:groce_zone_admin/components/small_screen.dart';
+import 'package:groce_zone_admin/pages/dashboard/dashboard_screen.dart';
 
 import 'components/large_screen.dart';
 import 'components/top_nav_bar.dart';
@@ -13,15 +15,19 @@ class SiteLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: light,
       key: scaffoldKey,
       extendBodyBehindAppBar: true,
       appBar:  topNavigationBar(context, scaffoldKey),
       drawer: const Drawer(
         // child: SideMenu(),
       ),
-      body: ResponsiveWidget(
-          largeScreen: const LargeScreen(),
-          smallScreen: SmallScreen(),
+      body: Padding(
+        padding:  EdgeInsets.symmetric(vertical: 50),
+        child: ResponsiveWidget(
+            largeScreen:  DashBoardScreen(),
+            smallScreen: SmallScreen(),
+        ),
       ),
     );
   }

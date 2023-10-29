@@ -6,7 +6,7 @@ import 'package:groce_zone_admin/routing/routes.dart';
 
 class SideMenuController extends GetxController {
   static SideMenuController instance = Get.find();
-  var activeItem = DashBoardPageRoute.obs;
+  var activeItem = 'dashboard'.obs;
   var hoverItem = ''.obs;
 
   changePageTo(String itemName) {

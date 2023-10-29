@@ -6,6 +6,7 @@ import 'custom_text.dart';
 
 AppBar topNavigationBar(BuildContext context, GlobalKey<ScaffoldState> key) =>
     AppBar(
+
       leading: !ResponsiveWidget.isSmallScreen(context)
           ? Row(
         children: [
@@ -97,6 +98,6 @@ AppBar topNavigationBar(BuildContext context, GlobalKey<ScaffoldState> key) =>
         ],
       ),
       iconTheme: const IconThemeData(color: dark),
-      elevation: 0,
-      backgroundColor: Colors.transparent,
+      elevation: 1,
+      backgroundColor: lightGrey.withOpacity(0.1),
     );
