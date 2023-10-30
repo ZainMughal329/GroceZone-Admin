@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:groce_zone_admin/controllers/menu_controllers.dart';
+import 'package:groce_zone_admin/helpers/responsive.dart';
+import 'package:groce_zone_admin/pages/dashboard/widgets/dashboard_view.dart';
 import 'package:groce_zone_admin/pages/inventory/inventory_view.dart';
 import 'package:groce_zone_admin/pages/orders/orders_view.dart';
 
@@ -41,7 +43,7 @@ class DashBoardScreen extends StatelessWidget {
                             child: Icon(
                           itemIcon,
                           size: 25,
-                              color: controller.isHovering(itemName)
+                              color: controller.isHovering(itemName) || controller.activeItem.value == itemValue
                                   ? Colors.green
                                   : Colors.black.withOpacity(0.2),
                         ),),
@@ -98,11 +100,7 @@ class DashBoardScreen extends StatelessWidget {
     } else if (screen == "orders") {
       return OrderView();
     } else
-      return Container(
-        child: Center(
-          child: Text('DashBoard Screen'),
-        ),
-      );
+      return DashBoardView();
   }
 
   @override

@@ -46,6 +46,7 @@ dependencies:
   image_picker:
   google_fonts:
   image_picker_web:
+  charts_flutter_new:
 
 dev_dependencies:
   flutter_test:
