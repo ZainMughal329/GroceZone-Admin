@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:groce_zone_admin/controllers/menu_controllers.dart';
 import 'package:groce_zone_admin/layout.dart';
+import 'package:groce_zone_admin/pages/inventory/addInventory/controller.dart';
 import 'package:groce_zone_admin/pages/orders/widgets/order_items/controller.dart';
 import 'package:groce_zone_admin/pages/orders/widgets/orders_detail/controller.dart';
 
@@ -22,6 +23,7 @@ void main() async {
   Get.put(SideMenuController());
   Get.put(OrderDetailController());
   Get.put(OrderItemsController());
+  Get.put(AddItemController());
 
   // await FirebaseAppWeb
   runApp(const MyApp());

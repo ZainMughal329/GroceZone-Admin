@@ -43,6 +43,9 @@ dependencies:
   cloud_firestore:
   get:
   intl:
+  image_picker:
+  google_fonts:
+  image_picker_web:
 
 dev_dependencies:
   flutter_test:

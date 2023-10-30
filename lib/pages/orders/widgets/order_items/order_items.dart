@@ -53,7 +53,7 @@ class OrderItemsView extends GetView<OrderItemsController> {
               child: Container(
                 height: 100,
                 width: 100,
-                child: Image.network(img),
+                child: Image(image: NetworkImage(img)),
               ),
             ),
             SizedBox(

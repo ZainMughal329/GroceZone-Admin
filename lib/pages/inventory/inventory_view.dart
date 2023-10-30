@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:groce_zone_admin/pages/inventory/addInventory/view.dart';
 
 import '../../components/inventory_widget.dart';
 
@@ -19,7 +21,9 @@ class InventoryScreen extends StatelessWidget {
                   icon: Icons.add,
                   color: Colors.white,
                   borderColor: Colors.green,
-                  onPress: () {},
+                  onPress: () {
+                    Get.to(AddItemView());
+                  },
                 ),
                 InventoryWidget(
                   title: 'Edit',
