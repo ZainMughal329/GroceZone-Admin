@@ -30,6 +30,17 @@ class DashBoardView extends StatelessWidget {
       child: Container(
         child: Column(
           children: [
+            Padding(
+              padding:  EdgeInsets.symmetric(horizontal: 25,vertical: 10),
+              child: Align(
+                alignment: Alignment.topRight,
+                child: InkWell(
+                    onTap: () {
+                      con.refreshData();
+                    },
+                    child: Icon(Icons.refresh)),
+              ),
+            ),
             ResponsiveWidget.isLargeScreen(context)
                 ? Obx(
                   () =>
@@ -299,46 +310,48 @@ class DashBoardView extends StatelessWidget {
                       color: lightGrey,
                     ),
                     Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Row(
-                            children: [
-                              RevenueInfo(
-                                title: "Today's revenue",
-                                amount: con
-                                    .state.orderPricesForLastDay.value
-                                    .toString(),
-                              ),
-                              RevenueInfo(
-                                title: "Last 7 days",
-                                amount: con.state
-                                    .orderPricesForLastSevenDays.value
-                                    .toString(),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 30,
-                          ),
-                          Row(
-                            children: [
-                              RevenueInfo(
-                                title: "Last 30 days",
-                                amount: con
-                                    .state.orderPricesForLastMonth.value
-                                    .toString(),
-                              ),
-                              RevenueInfo(
-                                title: "Last 12 months",
-                                amount: con
-                                    .state.orderPricesForLastYear.value
-                                    .toString(),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
+                      child: Obx((){
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Row(
+                              children: [
+                                RevenueInfo(
+                                  title: "Today's revenue",
+                                  amount: con
+                                      .state.orderPricesForLastDay.value
+                                      .toString(),
+                                ),
+                                RevenueInfo(
+                                  title: "Last 7 days",
+                                  amount: con.state
+                                      .orderPricesForLastSevenDays.value
+                                      .toString(),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 30,
+                            ),
+                            Row(
+                              children: [
+                                RevenueInfo(
+                                  title: "Last 30 days",
+                                  amount: con
+                                      .state.orderPricesForLastMonth.value
+                                      .toString(),
+                                ),
+                                RevenueInfo(
+                                  title: "Last 12 months",
+                                  amount: con
+                                      .state.orderPricesForLastYear.value
+                                      .toString(),
+                                ),
+                              ],
+                            ),
+                          ],
+                        );
+                      }),
                     ),
                   ],
                 ),

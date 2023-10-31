@@ -1,12 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
+import 'package:groce_zone_admin/components/snackbar_widget.dart';
 import 'package:groce_zone_admin/pages/dashboard/state.dart';
 import 'package:intl/intl.dart';
 
 class DashBoardController extends GetxController {
   var state = DashBoardState();
 
-  void fetchData() {
+  Future<void> fetchData() async{
     fetchAllOrdersData();
     fetchCancelledOrders();
     fetchDeliveredOrders();
@@ -148,6 +149,7 @@ class DashBoardController extends GetxController {
 
           prices += orderPrice;
         });
+        print("Lastday price"+prices.toString());
 
         String formattedTotalPrice =
             '₨ ${NumberFormat.currency(symbol: '', decimalDigits: 2).format(prices)}';
@@ -246,6 +248,25 @@ class DashBoardController extends GetxController {
       print('Error fetching data: $e');
     }
   }
+
+  Future<void> refreshData() async {
+    state.loaded.value = false;
+    Snackbar.showSnackBar("Updating", "Fetching data...");
+    Future.delayed(Duration(seconds: 3), () {
+      try {
+        fetchData().then((value) {});
+      } catch (e) {
+        Snackbar.showSnackBar("Error", e.toString());
+      }
+    });
+
+    try {
+      fetchData().then((value) {});
+    } catch (e) {
+      Snackbar.showSnackBar("Error", e.toString());
+    }
+  }
+
 
   void fetchDataAndCountOrders() async {
     FirebaseFirestore firestore = FirebaseFirestore.instance;

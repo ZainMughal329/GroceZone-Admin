@@ -6,6 +6,9 @@ import 'package:groce_zone_admin/controllers/menu_controllers.dart';
 import 'package:groce_zone_admin/layout.dart';
 import 'package:groce_zone_admin/pages/dashboard/controller.dart';
 import 'package:groce_zone_admin/pages/inventory/addInventory/controller.dart';
+import 'package:groce_zone_admin/pages/inventory/discountedItems/controller.dart';
+import 'package:groce_zone_admin/pages/inventory/editInventory/all_items_edit/controller.dart';
+import 'package:groce_zone_admin/pages/inventory/editInventory/edit_details_screen/controller.dart';
 import 'package:groce_zone_admin/pages/orders/widgets/order_items/controller.dart';
 import 'package:groce_zone_admin/pages/orders/widgets/orders_detail/controller.dart';
 
@@ -26,6 +29,9 @@ void main() async {
   Get.put(OrderItemsController());
   Get.put(AddItemController());
   Get.put(DashBoardController());
+  Get.put(EditItemController());
+  Get.put(EditScreenController());
+  Get.put(DiscountedItemController());
 
   // await FirebaseAppWeb
   runApp(const MyApp());

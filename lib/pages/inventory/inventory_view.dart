@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:groce_zone_admin/pages/inventory/addInventory/view.dart';
+import 'package:groce_zone_admin/pages/inventory/discountedItems/view.dart';
+import 'package:groce_zone_admin/pages/inventory/editInventory/all_items_edit/view.dart';
+import 'package:groce_zone_admin/pages/inventory/editInventory/edit_details_screen/view.dart';
 
 import '../../components/inventory_widget.dart';
 
@@ -30,14 +33,18 @@ class InventoryScreen extends StatelessWidget {
                   icon: Icons.edit,
                   color: Colors.white,
                   borderColor: Colors.green,
-                  onPress: () {},
+                  onPress: () {
+                    Get.to(EditItemView());
+                  },
                 ),
                 InventoryWidget(
                   title: 'Discounted Items',
                   icon: Icons.discount_outlined,
                   color: Colors.white,
                   borderColor: Colors.green,
-                  onPress: () {},
+                  onPress: () {
+                    Get.to(DiscountedItemView());
+                  },
                 ),
               ],
             ),

@@ -287,27 +287,48 @@ class AddItemView extends GetView<AddItemController> {
             builder: (con) => Column(
               children: [
                 Obx(
-                  () => con.imageUrl != ''
-                      ? Container(
-                          width: 200,
-                          height: 200,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(200),
-                            color: Colors.green.withOpacity(0.1),
-                          ),
+                  (){
+                    print('Image URL: ${con.imageUrl.value.toString()}');
+                    return con.imageUrl != ''
+                        ? Container(
+                        width: 200,
+                        height: 200,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(200),
+                          color: Colors.green.withOpacity(0.1),
+                        ),
+                        child:
+                        ClipRRect(
                           child: Image.network(
+                            // 'https://firebasestorage.googleapis.com/v0/b/grocery-app-bed5a.appspot.com/o/newFile1698784293449000?alt=media&token=ff7d7c20-465b-4e09-900d-93cf0b099430',
                             con.imageUrl.value.toString(),
                             width: 200,
                             height: 200,
-                          ))
-                      : Center(
-                          child: Container(
-                            child: Icon(
-                              Icons.image,
-                              color: Colors.orange,
-                            ),
+                            errorBuilder: (context, error, stackTrace) {
+                              print('Error loading image: $error');
+                              return Center(
+                                child: Container(
+                                  child: Icon(
+                                    Icons.image,
+                                    color: Colors.orange,
+                                  ),
+                                ),
+                              );
+                            },
                           ),
                         ),
+                    )
+                        : Center(
+                      child: Container(
+                        child: Icon(
+                          Icons.image,
+                          color: Colors.orange,
+                        ),
+                      ),
+                    );
+                  }
+
+
                 ),
                 SizedBox(
                   height: 3,
@@ -347,28 +368,6 @@ class AddItemView extends GetView<AddItemController> {
             ),
           ),
         ),
-
-        // Container(
-        //   child: TextButton(
-        //     onPressed: () {
-        //       controller.pickImageFromGallery();
-        //     },
-        //     child: Row(
-        //       mainAxisAlignment: MainAxisAlignment.center,
-        //       children: [
-        //         TextWidget(
-        //           title: 'Add Image',
-        //           fontSize: 14,
-        //         ),
-        //         Icon(
-        //           Icons.add,
-        //           color: LightAppColor.btnColor,
-        //           size: 18,
-        //         )
-        //       ],
-        //     ),
-        //   ),
-        // )
       ],
     );
   }
