@@ -49,6 +49,7 @@ dependencies:
   charts_flutter_new:
   fl_chart:
   file_picker:
+  data_table_2:
 
 dev_dependencies:
   flutter_test:

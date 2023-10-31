@@ -66,37 +66,59 @@ class AddItemView extends GetView<AddItemController> {
           _buildPriceQtyWidget(),
           _buildCategoryWidget(),
           _buildSubCategoryWidget(),
-          Obx((){
+          Obx(() {
             return Container(
-              child: controller.state.loading.value == false ? RoundButton(title: 'Add Product', onPress: () {
-
-                if(
-                controller.Image!=null &&
-                    controller.state.titleController.text!=''&&controller.state.descriptionController.text!=''
-                    &&controller.state.stockController.text!=''&&
-                    controller.state.priceController.text!=''&&controller.state.discountController.text!=''
-                    &&controller.state.priceQtyValue.value!='Select'&&
-                    controller.state.categoryValue.value!='Select'&&controller.state.subCategoryValue.value!='Select'
-                ){
-
-                  ItemModel item = ItemModel(
-                    title: controller.state.titleController.text.trim().toString(),
-                    description: controller.state.titleController.text.trim().toString(),
-                    price: int.parse(controller.state.priceController.text.trim().toString()),
-                    priceQty: controller.state.priceQtyValue.value.toString(),
-                    stock: int.parse(controller.state.stockController.text.trim().toString()),
-                    category: controller.state.categoryValue.value.toString(),
-                    subCategory: controller.state.subCategoryValue.value.toString(),
-                    discount: int.parse(controller.state.discountController.text.trim().toString()),
-
-                  );
-                  controller.addItem(item);
-
-
-                }else{
-                  Snackbar.showSnackBar('Error', 'Enter All Fields');
-                }
-              }) : Container(child: Center(child: CircularProgressIndicator(color: Colors.green,))),
+              child: controller.state.loading.value == false
+                  ? RoundButton(
+                      title: 'Add Product',
+                      onPress: () {
+                        if (controller.imageUrl != '' &&
+                            controller.state.titleController.text != '' &&
+                            controller.state.descriptionController.text != '' &&
+                            controller.state.stockController.text != '' &&
+                            controller.state.priceController.text != '' &&
+                            controller.state.discountController.text != '' &&
+                            controller.state.priceQtyValue.value != 'Select' &&
+                            controller.state.categoryValue.value != 'Select' &&
+                            controller.state.subCategoryValue.value !=
+                                'Select') {
+                          ItemModel item = ItemModel(
+                            title: controller.state.titleController.text
+                                .trim()
+                                .toString(),
+                            description: controller.state.titleController.text
+                                .trim()
+                                .toString(),
+                            price: int.parse(controller
+                                .state.priceController.text
+                                .trim()
+                                .toString()),
+                            priceQty:
+                                controller.state.priceQtyValue.value.toString(),
+                            stock: int.parse(controller
+                                .state.stockController.text
+                                .trim()
+                                .toString()),
+                            category:
+                                controller.state.categoryValue.value.toString(),
+                            subCategory: controller.state.subCategoryValue.value
+                                .toString(),
+                            discount: int.parse(controller
+                                .state.discountController.text
+                                .trim()
+                                .toString()),
+                            imageUrl: controller.imageUrl.value,
+                          );
+                          controller.addItem(item);
+                        } else {
+                          Snackbar.showSnackBar('Error', 'Enter All Fields');
+                        }
+                      })
+                  : Container(
+                      child: Center(
+                          child: CircularProgressIndicator(
+                      color: Colors.green,
+                    ))),
             );
           })
         ],
@@ -244,7 +266,7 @@ class AddItemView extends GetView<AddItemController> {
                 fontSize: 14,
               ),
               items:
-              controller.subCatList(controller.state.categoryValue.value),
+                  controller.subCatList(controller.state.categoryValue.value),
               onChanged: (value) {
                 controller.state.subCategoryValue.value = value!;
                 // print(DateTime.now().day);
@@ -262,40 +284,62 @@ class AddItemView extends GetView<AddItemController> {
         Padding(
           padding: EdgeInsets.only(top: 10, bottom: 1),
           child: GetBuilder<AddItemController>(
-            builder: (AddItemController) => Column(
+            builder: (con) => Column(
               children: [
-                controller.imageBytes.isNotEmpty ? Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(200),
-                      color: Colors.green.withOpacity(0.1),
-                    ),
-                    child: Image.memory(
-                      controller.imageBytes,
-                      width: 200,
-                      height: 200,
-                    )
-                ): Container(),
-                SizedBox(height: 3,),
-                controller.Image!=null ? InkWell(
-                  onTap: (){
-                    controller.pickImageFromGallery();
+                Obx(
+                  () => con.imageUrl != ''
+                      ? Container(
+                          width: 200,
+                          height: 200,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(200),
+                            color: Colors.green.withOpacity(0.1),
+                          ),
+                          child: Image.network(
+                            con.imageUrl.value.toString(),
+                            width: 200,
+                            height: 200,
+                          ))
+                      : Center(
+                          child: Container(
+                            child: Icon(
+                              Icons.image,
+                              color: Colors.orange,
+                            ),
+                          ),
+                        ),
+                ),
+                SizedBox(
+                  height: 3,
+                ),
+                // controller.Image!=null ? InkWell(
+                //   onTap: (){
+                //     controller.pickImageFromGallery();
+                //   },
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.center,
+                //     children: [
+                //       TextWidget(title: 'EditImage',fontSize: 14,),
+                //       Icon(Icons.edit,size: 18,color: Colors.green,)
+                //     ],
+                //   ),
+                // ) :
+                InkWell(
+                  onTap: () {
+                    controller.uploadImageToStorage();
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      TextWidget(title: 'EditImage',fontSize: 14,),
-                      Icon(Icons.edit,size: 18,color: Colors.green,)
-                    ],
-                  ),
-                ) : InkWell(
-                  onTap: (){
-                    controller.pickImageFromGallery();
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      TextWidget(title: 'AddImage',fontSize: 14,),
-                      Icon(Icons.add,size: 18,color: Colors.green,)
+                      TextWidget(
+                        title: 'AddImage',
+                        fontSize: 14,
+                      ),
+                      Icon(
+                        Icons.add,
+                        size: 18,
+                        color: Colors.green,
+                      )
                     ],
                   ),
                 ),
@@ -335,16 +379,15 @@ class AddItemView extends GetView<AddItemController> {
       appBar: AppBar(
         title: Text("Add Inventory"),
         backgroundColor: Colors.green,
-
       ),
       body: SingleChildScrollView(
         child: SafeArea(
             child: Center(
-              child: Padding(
-                padding: EdgeInsets.only(top: 10, bottom: 40),
-                child: _buildForm(),
-              ),
-            )),
+          child: Padding(
+            padding: EdgeInsets.only(top: 10, bottom: 40),
+            child: _buildForm(),
+          ),
+        )),
       ),
     );
   }
