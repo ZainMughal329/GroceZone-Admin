@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 
 class DashBoardState {
+  RxInt totalSales = 0.obs;
+  RxInt totalOrders = 0.obs;
   RxInt pendingOrders= 0.obs;
   RxInt shippedOrders= 0.obs;
   RxInt deliveredOrders= 0.obs;

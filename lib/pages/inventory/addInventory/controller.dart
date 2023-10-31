@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'dart:html' as html;
+import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +11,7 @@ import 'package:groce_zone_admin/components/snackbar_widget.dart';
 import 'package:groce_zone_admin/models/item_model.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image_picker_web/image_picker_web.dart';
+
 
 import 'state.dart';
 
@@ -28,40 +31,79 @@ class AddItemController extends GetxController {
   XFile? _image;
   XFile? get Image => _image;
   String? imageUrl = '';
-  // Future pickImageFromGallery() async {
-  //   final pickedImage =
-  //   await picker.pickImage(source: ImageSource.gallery, imageQuality: 50);
+  Future pickImageFromGallery() async {
+    final pickedImage =
+    await picker.pickImage(source: ImageSource.gallery, imageQuality: 50);
+
+    if (pickedImage != null) {
+      _image = XFile(pickedImage.path);
+      Snackbar.showSnackBar('Image', "Added Successfully");
+      update();
+    }
+  }
+
+
+  Rx<Uint8List>? _imageBytes;
+
+  set imageBytes(Uint8List value) => _imageBytes!.value = value;
+  Uint8List get imageBytes => _imageBytes!.value;
+
+
+  Future<void> pickImage() async {
+    final result = await FilePicker.platform.pickFiles(
+      type: FileType.image,
+      allowMultiple: false,
+    );
+
+    if (result == null) {
+      print('null result');
+    }
+
+    final fileBytes = result!.files.first.bytes;
+    imageBytes = Uint8List.fromList(fileBytes!);
+  }
+
+  // Future<void> pickImage() async {
+  //   final result = await FilePicker.platform.pickFiles(
+  //     type: FileType.image,
+  //     allowMultiple: false,
+  //   );
   //
-  //   if (pickedImage != null) {
-  //     _image = XFile(pickedImage.path);
-  //     Snackbar.showSnackBar('Image', "Added Successfully");
-  //     update();
+  //   if (result == null) {
+  //     // User canceled the file picker
   //   }
+  //
+  //   final fileBytes = result!.files.first.bytes;
+  //    print(Uint8List.fromList(fileBytes!));
+  //
   // }
 
-  Future<XFile?> pickImageFromGallery() async {
-    // Image? fromPicker = await ImagePickerWeb.getImageAsWidget();
-    final pickedImage = await ImagePickerWeb.getImageAsFile();
-    // final pickedImage = await ImagePickerWeb.getImage(outputType: ImageType.file);
-    if (pickedImage != null) {
-      onFilePicked(pickedImage);
 
-      // print("imagePicked"+pickedImage.asStream().toString());
-      // return XFile(pickedImage.toString());
 
-    }
-    return null;
-  }
 
-  void onFilePicked(html.File file) {
-    final reader = html.FileReader();
-    reader.readAsDataUrl(file);
-    print(reader.toString());
-    reader.onLoadEnd.listen((event) {
-      imageUrl = reader.result as String?;
-      // print(imageUrl);
-    });
-  }
+  // Future<XFile?> pickImageFromGallery() async {
+  //   // Image? fromPicker = await ImagePickerWeb.getImageAsWidget();
+  //   final pickedImage = await ImagePickerWeb.getImageAsFile();
+  //   // final pickedImage = await ImagePickerWeb.getImage(outputType: ImageType.file);
+  //   if (pickedImage != null) {
+  //     onFilePicked(pickedImage);
+  //
+  //     // print("imagePicked"+pickedImage.asStream().toString());
+  //     // return XFile(pickedImage.toString());
+  //
+  //   }
+  //   return null;
+  // }
+  //
+  // void onFilePicked(html.File file) {
+  //   final reader = html.FileReader();
+  //   reader.readAsDataUrl(file);
+  //   print(reader.toString());
+  //   reader.onLoadEnd.listen((event) {
+  //     imageUrl = reader.result as String?;
+  //     // print(imageUrl);
+  //   });
+  // }
 
   // select subCategoryList
   List<DropdownMenuItem> subCatList(String value) {

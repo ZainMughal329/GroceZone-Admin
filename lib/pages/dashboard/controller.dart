@@ -7,6 +7,7 @@ class DashBoardController extends GetxController {
   var state = DashBoardState();
 
   void fetchData() {
+    fetchAllOrdersData();
     fetchCancelledOrders();
     fetchDeliveredOrders();
     fetchPendingOrders();
@@ -16,6 +17,21 @@ class DashBoardController extends GetxController {
     fetchDataAndCalculatePricesForThirtyDays();
     fetchDataAndCalculatePricesForLastDay();
     fetchDataAndCountOrders();
+  }
+
+  Future<void> fetchAllOrdersData() async {
+    QuerySnapshot snapshot =
+    await FirebaseFirestore.instance.collection('allOrders').get();
+    int totalOrderAmount = 0;
+    if (snapshot.docs.isNotEmpty) {
+      state.totalOrders.value = snapshot.docs.length;
+      // loadedMap.addAll({"Orders": state.totalOrders.toDouble()});
+      for (DocumentSnapshot doc in snapshot.docs) {
+        int orderPrice = doc['orderPrice'];
+        totalOrderAmount = totalOrderAmount + orderPrice;
+      }
+      state.totalSales.value = totalOrderAmount;
+    }
   }
 
   Future<void> fetchPendingOrders() async {
@@ -67,7 +83,7 @@ class DashBoardController extends GetxController {
     CollectionReference allOrdersCollection = firestore.collection('allOrders');
 
     try {
-      print('in try');
+
       DateTime now = DateTime.now();
       DateTime sevenDaysAgo = now.subtract(
         Duration(days: 7),
@@ -82,10 +98,7 @@ class DashBoardController extends GetxController {
       double prices = 0.0;
 
       if (querySnapshot.docs.isNotEmpty) {
-        print('in if');
-        print(
-          'length is : ' + querySnapshot.docs.length.toString(),
-        );
+
 
         querySnapshot.docs.forEach((doc) {
           // print('loop runs');
@@ -111,7 +124,7 @@ class DashBoardController extends GetxController {
     CollectionReference allOrdersCollection = firestore.collection('allOrders');
 
     try {
-      print('in try');
+
       DateTime now = DateTime.now();
       DateTime today = DateTime(now.year, now.month, now.day);
       DateTime tomorrow = now.add(
@@ -127,16 +140,9 @@ class DashBoardController extends GetxController {
       double prices = 0.0;
 
       if (querySnapshot.docs.isNotEmpty) {
-        print('in if');
-        print(
-          'length is : ' + querySnapshot.docs.length.toString(),
-        );
+
 
         querySnapshot.docs.forEach((doc) {
-          print('loop runs');
-          print(
-            'id is : ' + doc['orderId'].toString(),
-          );
           double orderPrice = doc[
               'orderPrice']; // Replace 'orderPrice' with the actual field name in your Firestore document
 
@@ -148,7 +154,7 @@ class DashBoardController extends GetxController {
 
         state.orderPricesForLastDay.value = formattedTotalPrice;
       } else {
-        print('in else');
+
         state.orderPricesForLastDay.value = '0';
       }
     } catch (e) {
@@ -161,7 +167,7 @@ class DashBoardController extends GetxController {
     CollectionReference allOrdersCollection = firestore.collection('allOrders');
 
     try {
-      print('in try');
+
       DateTime now = DateTime.now();
       DateTime sevenDaysAgo = now.subtract(
         Duration(days: 30),
@@ -176,10 +182,7 @@ class DashBoardController extends GetxController {
       double prices = 0.0;
 
       if (querySnapshot.docs.isNotEmpty) {
-        print('in if');
-        print(
-          'length is : ' + querySnapshot.docs.length.toString(),
-        );
+
 
         querySnapshot.docs.forEach((doc) {
           // print('loop runs');
@@ -205,7 +208,7 @@ class DashBoardController extends GetxController {
     CollectionReference allOrdersCollection = firestore.collection('allOrders');
 
     try {
-      print('in try');
+
       DateTime now = DateTime.now();
       DateTime sevenDaysAgo = now.subtract(
         Duration(days: 365),
@@ -220,7 +223,7 @@ class DashBoardController extends GetxController {
       double prices = 0.0;
 
       if (querySnapshot.docs.isNotEmpty) {
-        print('in if');
+
         // print(
         //   'length is : ' + querySnapshot.docs.length.toString(),
         // );
@@ -257,11 +260,11 @@ class DashBoardController extends GetxController {
           sevenDaysAgo.microsecondsSinceEpoch.toString())
           .get();
       if(querySnapshot.docs.isNotEmpty) {
-        print('length : ' +querySnapshot.docs.length.toString(),);
+        // print('length : ' +querySnapshot.docs.length.toString(),);
 
-        print('in query');
+        // print('in query');
         state.orderCounts.value = querySnapshot.docs.length;
-        print('length : ' +querySnapshot.docs.length.toString(),);
+        // print('length : ' +querySnapshot.docs.length.toString(),);
       }else{
         state.orderCounts.value = 0;
       }

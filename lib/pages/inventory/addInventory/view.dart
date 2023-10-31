@@ -264,37 +264,17 @@ class AddItemView extends GetView<AddItemController> {
           child: GetBuilder<AddItemController>(
             builder: (AddItemController) => Column(
               children: [
-                Container(
-                  height: 150,
-                  width: 150,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(200),
-                    color: Colors.green.withOpacity(0.1),
-                  ),
-                  child: InkWell(
-                    onTap: () {
-                      controller.pickImageFromGallery();
-                    },
-                    child: controller.imageUrl == ''
-                        ? Icon(
-                      Icons.image,
-                      size: 50,
-                      color: Colors.green,
+                controller.imageBytes.isNotEmpty ? Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(200),
+                      color: Colors.green.withOpacity(0.1),
+                    ),
+                    child: Image.memory(
+                      controller.imageBytes,
+                      width: 200,
+                      height: 200,
                     )
-                        : Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(200),
-                          color: Colors.green.withOpacity(0.1),
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(100),
-                          child: Image.network(controller.imageUrl.toString()
-
-                          ),
-                          ),
-                        ),
-                  ),
-                ),
+                ): Container(),
                 SizedBox(height: 3,),
                 controller.Image!=null ? InkWell(
                   onTap: (){

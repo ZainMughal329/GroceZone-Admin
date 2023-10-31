@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,6 +13,8 @@ class AddItemState {
   final descriptionController = TextEditingController();
   final stockController = TextEditingController();
   final discountController = TextEditingController();
+
+  // Rx<Uint8List>? webImage;
 
   RxString priceQtyValue = 'Select'.obs;
   Rx<bool> loading = false.obs;
