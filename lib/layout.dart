@@ -4,6 +4,7 @@ import 'package:groce_zone_admin/components/small_screen.dart';
 import 'package:groce_zone_admin/pages/dashboard/dashboard_screen.dart';
 
 import 'components/large_screen.dart';
+import 'components/side_menu.dart';
 import 'components/top_nav_bar.dart';
 import 'helpers/responsive.dart';
 
@@ -19,8 +20,8 @@ class SiteLayout extends StatelessWidget {
       key: scaffoldKey,
       extendBodyBehindAppBar: true,
       appBar:  topNavigationBar(context, scaffoldKey),
-      drawer: const Drawer(
-        // child: SideMenu(),
+      drawer: Drawer(
+        child: SideMenu(),
       ),
       body: Padding(
         padding:  EdgeInsets.symmetric(vertical: 50),
